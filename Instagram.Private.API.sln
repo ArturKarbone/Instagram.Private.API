@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instagram.Private.API", "src\Instagram.Private.API\Instagram.Private.API.csproj", "{FD907C7A-0B00-4092-813B-EF1553AA15D1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instagram.Private.API.Tests", "tests\Instagram.Private.API.Tests\Instagram.Private.API.Tests.csproj", "{EB6A27C1-A5F1-4D82-852A-583AAE9DCB49}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD907C7A-0B00-4092-813B-EF1553AA15D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD907C7A-0B00-4092-813B-EF1553AA15D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD907C7A-0B00-4092-813B-EF1553AA15D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD907C7A-0B00-4092-813B-EF1553AA15D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB6A27C1-A5F1-4D82-852A-583AAE9DCB49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB6A27C1-A5F1-4D82-852A-583AAE9DCB49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB6A27C1-A5F1-4D82-852A-583AAE9DCB49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB6A27C1-A5F1-4D82-852A-583AAE9DCB49}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
