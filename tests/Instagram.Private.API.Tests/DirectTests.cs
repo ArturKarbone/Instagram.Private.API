@@ -35,5 +35,18 @@ namespace Instagram.Private.API.Tests
                 .status
                 .ShouldBe("ok");
         }
+
+
+        [Fact]
+        public void Should_Query_Inbox()
+        {
+            var cursor = Fixtures.Clients.Default
+                .Direct
+                .InboxCursor();            
+
+            foreach (var inbox in cursor)
+            {
+            }
+        }
     }
 }
