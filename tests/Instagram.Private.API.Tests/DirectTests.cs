@@ -46,6 +46,7 @@ namespace Instagram.Private.API.Tests
 
             foreach (var inbox in cursor)
             {
+                //TODO figure out tests
             }
         }
     }
