@@ -353,7 +353,7 @@ namespace Instagram.Private.API.Client.Direct
             }
         }
 
-        public async Task<ThreadResponse> Thread(string cursor)
+        protected async Task<ThreadResponse> Thread(string cursor)
         {
             return (await (await wrapper.SetResource($"threads/{cursor}").GetAsync()).Content.ReadAsStringAsync()).Deserialize<ThreadResponse>();
         }

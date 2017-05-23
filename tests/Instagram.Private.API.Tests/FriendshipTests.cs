@@ -1,5 +1,6 @@
 using Xunit;
 using Shouldly;
+using System.Linq;
 
 namespace Instagram.Private.API.Tests
 {
@@ -41,7 +42,9 @@ namespace Instagram.Private.API.Tests
         {
             Fixtures.Clients.Default
              .Friendship
-             .Followers(Fixtures.Accounts.To).Result
+             .FollowersCursor(Fixtures.Accounts.To)
+                .Take(1)
+                .First()
              .status
              .ShouldBe("ok");
         }
