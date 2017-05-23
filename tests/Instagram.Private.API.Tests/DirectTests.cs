@@ -1,4 +1,5 @@
 ﻿using Shouldly;
+using System.Linq;
 using Xunit;
 
 namespace Instagram.Private.API.Tests
@@ -6,7 +7,7 @@ namespace Instagram.Private.API.Tests
     public class DirectTests
     {
         [Fact]
-        [Trait("Direct","Functional")]
+        [Trait("Direct", "Functional")]
         public void Should_Send_Direct_Message()
         {
             Fixtures.Clients.Default
@@ -42,12 +43,12 @@ namespace Instagram.Private.API.Tests
         {
             var cursor = Fixtures.Clients.Default
                 .Direct
-                .InboxCursor();            
+                .InboxCursor();
 
-            foreach (var inbox in cursor)
+            cursor.Take(3).ToList().ForEach(inbox =>
             {
-                //TODO figure out tests
-            }
+                inbox.status.ShouldBe("ok");
+            });
         }
     }
 }

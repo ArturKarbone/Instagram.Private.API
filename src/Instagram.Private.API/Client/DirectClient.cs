@@ -321,23 +321,23 @@ namespace Instagram.Private.API.Client.Direct
             var res = Inbox().Result;
             yield return res;
 
-            while (!string.IsNullOrWhiteSpace(res.inbox.oldest_cursor))
+            while (res.inbox.has_older)
             {
                 res = Inbox(res.inbox.oldest_cursor).Result;
                 yield return res;
             }
         }
 
-        public async Task<InboxResponse> Inbox(string cursor = "")
+        protected async Task<InboxResponse> Inbox(string cursor = "")
         {
 
             if (!string.IsNullOrWhiteSpace(cursor))
             {
-                return (await (await wrapper.SetResource($"inbox/?cursor={cursor}").GetAsync()).Content.ReadAsStringAsync()).Deserialize<InboxResponse>();
+                return (await (await wrapper.SetResource($"direct_v2/inbox/?cursor={cursor}").GetAsync()).Content.ReadAsStringAsync()).Deserialize<InboxResponse>();
             }
             else
             {
-                return (await (await wrapper.SetResource($"inbox/").GetAsync()).Content.ReadAsStringAsync()).Deserialize<InboxResponse>();
+                return (await (await wrapper.SetResource($"direct_v2/inbox/").GetAsync()).Content.ReadAsStringAsync()).Deserialize<InboxResponse>();
             }
         }
 
