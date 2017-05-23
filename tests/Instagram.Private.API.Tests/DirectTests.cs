@@ -45,9 +45,33 @@ namespace Instagram.Private.API.Tests
                 .Direct
                 .InboxCursor();
 
-            cursor.Take(3).ToList().ForEach(inbox =>
+            cursor.Take(3).ToList().ForEach(inboxResponse =>
             {
-                inbox.status.ShouldBe("ok");
+                inboxResponse.status.ShouldBe("ok");
+            });
+        }
+
+
+        [Fact]
+        public void Should_Query_Inbox_Items()
+        {
+            var client = Fixtures.Clients.Default;
+
+            var cursor = client
+                .Direct
+                .InboxCursor();
+
+            cursor.Take(3).ToList().ForEach(inboxResponse =>
+            {
+                inboxResponse.status.ShouldBe("ok");
+
+                var threadResponse = client
+                    .Direct
+                    .TheadCursor(inboxResponse.inbox.threads.First().thread_id)
+                    .Take(10)
+                    .First();
+
+                threadResponse.status.ShouldBe("ok");
             });
         }
     }

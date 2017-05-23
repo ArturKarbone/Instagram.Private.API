@@ -1,20 +1,14 @@
 ﻿using Instagram.Private.API.Client.Direct;
 using Instagram.Private.API.Utils;
-using PoC;
 using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Instagram.Private.API.Client
 {
-	public class Account
+    public class Account
 	{
-		public Account(string Id)
+		public Account(string id)
 		{
-			this.Id = Id;
+			this.Id = id;
 		}
 		public string Id { get; set; }
 	}

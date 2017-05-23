@@ -245,7 +245,7 @@ namespace Instagram.Private.API.Client.Direct
 
         public class Inviter
         {
-            public int pk { get; set; }
+            public string pk { get; set; }
             public string username { get; set; }
             public string full_name { get; set; }
             public bool is_private { get; set; }
@@ -274,7 +274,7 @@ namespace Instagram.Private.API.Client.Direct
 
         public class User
         {
-            public int pk { get; set; }
+            public string pk { get; set; }
             public string username { get; set; }
             public string full_name { get; set; }
             public bool is_private { get; set; }
@@ -300,6 +300,7 @@ namespace Instagram.Private.API.Client.Direct
             public long timestamp { get; set; }
             public string item_type { get; set; }
             public string client_context { get; set; }
+            public string text { get; set; }
         }
     }
 
@@ -355,7 +356,7 @@ namespace Instagram.Private.API.Client.Direct
 
         protected async Task<ThreadResponse> Thread(string cursor)
         {
-            return (await (await wrapper.SetResource($"threads/{cursor}").GetAsync()).Content.ReadAsStringAsync()).Deserialize<ThreadResponse>();
+            return (await (await wrapper.SetResource($"direct_v2/threads/{cursor}/").GetAsync()).Content.ReadAsStringAsync()).Deserialize<ThreadResponse>();
         }
 
         public async Task<SendMessageResponse> SendMessage(Account to, string message)
