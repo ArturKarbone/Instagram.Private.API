@@ -8,6 +8,8 @@ namespace Instagram.Private.API.Tests
     {
         [Fact]
         [Trait("Direct", "Functional")]
+        ///dotnet test --filter "FullyQualifiedName=Instagram.Private.API.Tests.DirectTests.Should_Send_Direct_Message"
+
         public void Should_Send_Direct_Message()
         {
             Fixtures.Clients.Default

@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Instagram.Private.API.Utils
 {
@@ -16,16 +17,28 @@ namespace Instagram.Private.API.Utils
     {
         //public HttpClient _client { get; set; } = new HttpClient(new Handler());
 
-        CookieContainer cookies = new CookieContainer();
+        CookieContainer cookieContainer = new CookieContainer();
 
-        //handler.CookieContainer = cookies;
+
+        public IEnumerable<Cookie> Cookies => cookieContainer.GetCookies(_client.BaseAddress).Cast<Cookie>();
+        public void SetCookies(IEnumerable<Cookie> cookies)
+        {
+            cookies
+                .ToList()
+                .ForEach(c =>
+                {
+                    //cookieContainer.Add(_client.BaseAddress, new Cookie("CookieName", "cookie_value"));
+                    cookieContainer.Add(_client.BaseAddress, c);
+                });
+        }
+
 
         public HttpClient _client { get; set; }
         public string _resource { get; set; } = string.Empty;
         public object _param { get; set; }
         public HttpClientWrapper()
         {
-            HttpClientHandler handler = new HttpClientHandler() { CookieContainer = cookies };
+            HttpClientHandler handler = new HttpClientHandler() { CookieContainer = cookieContainer };
             _client = new HttpClient(handler);
 
             //Default headers
@@ -36,6 +49,7 @@ namespace Instagram.Private.API.Utils
 
         public HttpClientWrapper SetBaseAddress(string baseAddress)
         {
+
             _client.BaseAddress = new Uri(baseAddress);
             return this;
         }
@@ -139,7 +153,7 @@ namespace Instagram.Private.API.Utils
         public string GetCookieValue(string name)
         {
             Uri uri = _client.BaseAddress;
-            return cookies.GetCookies(uri).Cast<Cookie>().First(x => x.Name == name).Value;
+            return cookieContainer.GetCookies(uri).Cast<Cookie>().First(x => x.Name == name).Value;
         }
     }
 
