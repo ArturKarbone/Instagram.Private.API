@@ -1,10 +1,5 @@
 ﻿using Instagram.Private.API.Client.Direct;
 using Instagram.Private.API.Utils;
-using System;
-using System.IO;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Net;
 
 namespace Instagram.Private.API.Client
 {
@@ -29,8 +24,9 @@ namespace Instagram.Private.API.Client
         private Device device;
         private HttpClientWrapper wrapper = new HttpClientWrapper()
                                                 .SetBaseAddress("https://i.instagram.com/api/v1/");
-        public FriendshipClient Friendship;
-        public DirectClient Direct;
+        public FriendshipClient Friendship { get; }
+        public DirectClient Direct { get; }
+        public AccountClient Account { get; }
 
         public InstagramClient(string userName, string password, Device device)
         {
@@ -42,6 +38,7 @@ namespace Instagram.Private.API.Client
 
             Friendship = new FriendshipClient(wrapper, device);
             Direct = new DirectClient(wrapper, device);
+            Account = new AccountClient(wrapper, device);
         }
 
 

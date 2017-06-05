@@ -61,13 +61,19 @@ namespace Instagram.Private.API.Client
                 this.Authenticated = true;
                 this.Cookies = cookies;
             }
-
-            if (NeedToRefresh)
+            else
             {
                 Login(userName, password, device);
                 this.Cookies = Http.Cookies;
                 Storage.Persist(this.Cookies);
             }
+
+            //if (NeedToRefresh)
+            //{
+            //    Login(userName, password, device);
+            //    this.Cookies = Http.Cookies;
+            //    Storage.Persist(this.Cookies);
+            //}
 
             return this;
         }
