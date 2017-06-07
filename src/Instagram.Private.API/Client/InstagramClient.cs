@@ -27,6 +27,7 @@ namespace Instagram.Private.API.Client
         public FriendshipClient Friendship { get; }
         public DirectClient Direct { get; }
         public AccountClient Account { get; }
+        public MediaClient Media { get; }
 
         public InstagramClient(string userName, string password, Device device)
         {
@@ -39,6 +40,7 @@ namespace Instagram.Private.API.Client
             Friendship = new FriendshipClient(wrapper, device);
             Direct = new DirectClient(wrapper, device);
             Account = new AccountClient(wrapper, device);
+            Media = new MediaClient(wrapper, device);
         }
 
 

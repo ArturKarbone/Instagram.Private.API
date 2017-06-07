@@ -88,7 +88,6 @@ namespace Instagram.Private.API.Utils
 
             foreach (var prop in payload.GetType().GetProperties())
             {
-
                 var test = prop.GetValue(payload, null);
                 content.Add(new StringContent(prop.GetValue(payload, null).ToString()), prop.Name);
             }
