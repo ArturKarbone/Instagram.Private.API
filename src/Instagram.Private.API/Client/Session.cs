@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using Instagram.Private.API.Utils;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace Instagram.Private.API.Client
 {
@@ -16,20 +17,29 @@ namespace Instagram.Private.API.Client
     }
     public class FileSessionStorage : ISessionStorage
     {
-        public bool Exists => File.Exists("session.json");
+        protected string Id { get; }
+        protected string Path => $@"session_{Id}.json";
+
+        public FileSessionStorage(string id)
+        {
+            this.Id = id;
+        }
+
+        public bool Exists => File.Exists(Path);
+
         public IEnumerable<Cookie> Get()
         {
-            return JsonConvert.DeserializeObject<List<System.Net.Cookie>>(File.ReadAllText(@"session.json"));
+            return JsonConvert.DeserializeObject<List<System.Net.Cookie>>(File.ReadAllText(Path));
         }
         public void Persist(IEnumerable<Cookie> cookies)
         {
-            File.WriteAllText(@"session.json", JsonConvert.SerializeObject(cookies));
+            File.WriteAllText(Path, JsonConvert.SerializeObject(cookies));
         }
     }
 
     public class Session
     {
-        public ISessionStorage Storage { get; set; } = new FileSessionStorage();
+        public ISessionStorage Storage { get; set; }
         public IEnumerable<Cookie> Cookies { get; private set; }
         public HttpClientWrapper Http = new HttpClientWrapper();
 
@@ -42,6 +52,7 @@ namespace Instagram.Private.API.Client
             this.userName = userName;
             this.password = password;
             this.device = device;
+            this.Storage = new FileSessionStorage(userName);
         }
 
         public Session Ensure()
