@@ -92,6 +92,13 @@ namespace Instagram.Private.API.Client.Direct
     }
 
 
+    public class PostCommand
+    {
+        public string Caption { get; set; }
+        public OnlinePhoto Photo { get; set; }
+    }
+
+
     public class MediaClient
     {
         private HttpClientWrapper wrapper;
@@ -103,8 +110,14 @@ namespace Instagram.Private.API.Client.Direct
             this.device = device;
         }
 
+        public async Task Post(PostCommand command)
+        {
+            var photo = UploadPhoto(command.Photo).Result;
 
-        public async Task<UploadResponse> UploadPhoto(string path)
+            await ConfigurePhoto(photo.upload_id, command.Caption);
+        }
+
+        public async Task<UploadResponse> UploadPhoto(Photo photo)
         {
             var predictedUploadId = (long)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds;
             var payload = new
@@ -119,23 +132,14 @@ namespace Instagram.Private.API.Client.Direct
                 //recipient_users = $"[[ {to.Id} ]]"
             };
 
-            byte[] image = System.IO.File.ReadAllBytes(path);
-
             var response = wrapper
                 .SetResource($"upload/photo/")
-                .PostAsMultipartWithImage(payload, image).Result
+                .PostAsMultipartWithImage(payload, photo.Content()).Result
                 .Content.ReadAsStringAsync().Result
                 .Deserialize<UploadResponse>();
 
             return response;
-        }
-
-
-        //.{"source_type":"4","caption":"test","upload_id":"1496852009265","
-        /*device":{"manufacturer":"Huawei","model":"HUAWEI SCL-L03","android_version":20,"android_release":"4.4.4"},
-                    "edits":{"crop_original_size":[800.0,800.0],
-                    "crop_center":[0.0,-0.0],"crop_zoom":1.0},
-            "extra":{"source_width":800,"source_height":800}}*/
+        }   
 
 
         public async Task<SendMessageResponse> ConfigurePhoto(string upload_id, string caption)
