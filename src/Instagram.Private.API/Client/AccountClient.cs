@@ -59,7 +59,9 @@ namespace Instagram.Private.API.Client
 
         public async Task<SearchResult> Search(string userName)
         {
-            return (await (await wrapper.SetResource($"users/search/?is_typehead=true&q={userName}&rank_token={BuildRankToken()}").GetAsync()).Content.ReadAsStringAsync()).Deserialize<SearchResult>();
+            var resource = $"users/search/?is_typehead=true&q={userName}&rank_token={BuildRankToken()}";
+            return (await (await wrapper.SetResource(resource).GetAsync()).Content.ReadAsStringAsync())
+                .Deserialize<SearchResult>();
         }
 
         public async Task<User> SearchUser(string userName)
@@ -80,32 +82,3 @@ namespace Instagram.Private.API.Client
         }
     }
 }
-
-///api/v1/users/search/? is_typehead = true & q = boris & rank_token = 4480548799_735f6c7f-6fc2-4475-99cb-5fb1c1821142 HTTP/1.1
-
-//Helpers.buildRankToken = function(accountId)
-//{
-//    return accountId + '_' + Helpers.generateUUID();
-//};
-
-/*
-Account.search = function(session, username)
-{
-    return session.getAccountId()
-        .then(function(id) {
-        var rankToken = Helpers.buildRankToken(id);
-        return new Request(session)
-            .setMethod('GET')
-            .setResource('accountsSearch', {
-            query: username,
-                    rankToken: rankToken
-                })
-                .send();
-    })
-        .then(function(data) {
-        return _.map(data.users, function(user) {
-            return new Account(session, user);
-        });
-    })    
-};
-*/

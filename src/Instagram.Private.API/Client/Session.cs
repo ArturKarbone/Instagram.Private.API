@@ -111,7 +111,21 @@ namespace Instagram.Private.API.Client
                 .SetBaseAddress("https://i.instagram.com/api/v1/")
                 .SetResource("accounts/login/")
                 .PostSigned(payload).Result;
+
+            if (res.StatusCode != HttpStatusCode.OK)
+            {
+                throw new LoginFailed(userName);
+            }
+
         }
     }
 
+
+    class LoginFailed : Exception
+    {
+        public LoginFailed(string message) : base(message)
+        {
+
+        }
+    }
 }
