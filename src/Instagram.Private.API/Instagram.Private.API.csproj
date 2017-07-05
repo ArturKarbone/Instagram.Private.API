@@ -1,7 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
-    <Version>1.0.10</Version>
+    <Version>0.0.10-alpha</Version>
+    <Authors>Arturs Karbone</Authors>
+    <Description>Nice and sexy .NET client for working with Instagram private API</Description>
+    <Company />
+    <Product />
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />

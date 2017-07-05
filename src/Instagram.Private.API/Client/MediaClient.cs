@@ -6,6 +6,21 @@ using System.Threading.Tasks;
 
 namespace Instagram.Private.API.Client.Direct
 {
+    public class UploadFailed : Exception
+    {
+        public UploadFailed(string message) : base(message)
+        {
+
+        }
+    }
+
+    public class MediaConfigurationFailed : Exception
+    {
+        public MediaConfigurationFailed(string message) : base(message)
+        {
+
+        }
+    }
 
     public class UploadResponse
     {
@@ -114,7 +129,17 @@ namespace Instagram.Private.API.Client.Direct
         {
             var photo = UploadPhoto(command.Photo).Result;
 
-            await ConfigurePhoto(photo.upload_id, command.Caption);
+            if (photo.status != "ok")
+            {
+                throw new UploadFailed(photo.status);
+            }
+
+            var configuration = await ConfigurePhoto(photo.upload_id, command.Caption);
+
+            if (configuration.status != "ok")
+            {
+                throw new MediaConfigurationFailed(configuration.status);
+            }
         }
 
         public async Task<UploadResponse> UploadPhoto(Photo photo)
@@ -139,7 +164,7 @@ namespace Instagram.Private.API.Client.Direct
                 .Deserialize<UploadResponse>();
 
             return response;
-        }   
+        }
 
 
         public async Task<SendMessageResponse> ConfigurePhoto(string upload_id, string caption)
