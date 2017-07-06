@@ -402,7 +402,7 @@ namespace Instagram.Private.API.Client.Direct
             return response;
         }
 
-        public async Task<SendMessageResponse> SendPhoto(Account to, string path)
+        public async Task<SendMessageResponse> SendPhoto(Account to, Photo photo)
         {
             var payload = new
             {
@@ -412,18 +412,15 @@ namespace Instagram.Private.API.Client.Direct
                 client_context = Guid.NewGuid().ToString(),
                 type = "media",
                 recipient_users = $"[[ {to.Id} ]]"
-            };
-
-            byte[] image = System.IO.File.ReadAllBytes(path);
+            };          
 
             var response = wrapper
                 .SetResource($"direct_v2/threads/broadcast/upload_photo/ ")
-                .PostAsMultipartWithImage(payload, image).Result
+                .PostAsMultipartWithImage(payload, photo.Content()).Result
                 .Content.ReadAsStringAsync().Result
                 .Deserialize<SendMessageResponse>();
 
             return response;
         }
-
     }
 }
